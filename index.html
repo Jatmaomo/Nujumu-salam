@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUJUMU SALAM AROBIYAH TUL ISLAMIYAH | Ibadan, Nigeria</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter and Amiri fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Tailwind Configuration */
+        :root {
+            /* Define a more specific dark green for primary */
+            --color-primary: #10B981; /* Emerald 500 */
+            --color-primary-dark: #059669; /* Emerald 600 */
+            /* Define a subtle gold/yellow accent */
+            --color-accent: #FBBF24; /* Amber 400 */
+            /* Define a darker green for headings */
+            --color-heading: #065F46; /* Emerald 800 */
+        }
+        
+        .amiri-font {
+            font-family: 'Amiri', serif;
+        }
+        .inter-font {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Set base styles using Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #F9FAF8; /* Subtle off-white */
+        }
+
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: var(--color-primary-dark); border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #e0e0e0; }
+
+        /* Custom utility classes */
+        .shadow-islamic {
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -2px rgba(16, 185, 129, 0.05);
+        }
+        .arabic-header {
+            color: var(--color-heading);
+            position: relative;
+            display: inline-block;
+        }
+        .arabic-header::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease-out;
+        }
+        .arabic-header:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#10B981', // Emerald for Primary
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065F46', // Darker green for text
+                        },
+                        accent: {
+                            400: '#FBBF24', // Amber/Gold for Accent
+                            500: '#F59E0B',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="inter-font">
+
+    <!-- Toast Notification Area -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transition-opacity duration-500 ease-out opacity-0 pointer-events-none">
+        <div class="bg-primary-600 text-white p-4 rounded-lg shadow-xl flex items-center">
+            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white sticky top-0 z-40 shadow-md">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#home" class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-primary-700 text-white rounded-full flex items-center justify-center text-xl font-bold amiri-font">ن</div>
+                <span class="text-primary-800 text-xl font-extrabold tracking-tight">NUJUMU SALAM</span>
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="menu-button" class="lg:hidden text-primary-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex space-x-8">
+                <a href="#home" class="text-primary-700 hover:text-accent-500 transition duration-300">Home</a>
+                <a href="#about" class="text-primary-700 hover:text-accent-500 transition duration-300">About Us</a>
+                <a href="#programs" class="text-primary-700 hover:text-accent-500 transition duration-300">Programs</a>
+                <a href="#admin" class="text-primary-700 hover:text-accent-500 transition duration-300">Admin Message</a>
+                <a href="#registration" class="text-primary-700 hover:text-accent-500 transition duration-300 font-semibold">Registration</a>
+                <a href="#contact" class="text-primary-700 hover:text-accent-500 transition duration-300">Contact</a>
+            </div>
+        </nav>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="lg:hidden hidden px-4 pb-4 bg-gray-50">
+            <a href="#home" class="block py-2 text-primary-700 hover:bg-primary-50 rounded-md transition duration-300">Home</a>
+            <a href="#about" class="block py-2 text-primary-700 hover:bg-primary-50 rounded-md transition duration-300">About Us</a>
+            <a href="#programs" class="block py-2 text-primary-700 hover:bg-primary-50 rounded-md transition duration-300">Programs</a>
+            <a href="#admin" class="block py-2 text-primary-700 hover:bg-primary-50 rounded-md transition duration-300">Admin Message</a>
+            <a href="#registration" class="block py-2 text-primary-700 hover:bg-primary-50 rounded-md transition duration-300 font-semibold">Registration</a>
+            <a href="#contact" class="block py-2 text-primary-700 hover:bg-primary-50 rounded-md transition duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Home Page / Hero Section -->
+        <section id="home" class="bg-primary-700 text-white min-h-screen flex items-center relative overflow-hidden p-6">
+            <!-- Background Islamic Pattern Placeholder -->
+            <div class="absolute inset-0 opacity-10 bg-[url('https://api.iconify.design/vaadin:grid.svg?color=currentColor')] bg-repeat-space" style="color: white;"></div>
+
+            <div class="container mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between py-16">
+                <!-- Hero Content -->
+                <div class="lg:w-1/2 space-y-6 text-center lg:text-left">
+                    <h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tighter">
+                        <span class="text-accent-400 amiri-font block text-7xl mb-2">نجوم السلام</span>
+                        NUJUMU SALAM AROBIYAH
+                    </h1>
+                    <p class="text-xl md:text-2xl font-light max-w-lg mx-auto lg:mx-0">
+                        Raising students with Qur’an, Arabic, and Islamic morals for children, youths, and adults.
+                    </p>
+
+                    <!-- Quick Buttons -->
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-6">
+                        <a href="#about" class="px-6 py-3 bg-accent-400 text-primary-800 font-bold rounded-xl shadow-lg hover:bg-accent-500 transition duration-300 transform hover:scale-105">About Us</a>
+                        <a href="#programs" class="px-6 py-3 bg-white text-primary-700 font-bold rounded-xl shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105">Our Programs</a>
+                        <a href="#registration" class="px-6 py-3 border-2 border-white text-white font-bold rounded-xl shadow-lg hover:bg-white hover:text-primary-700 transition duration-300 transform hover:scale-105">Enroll Today</a>
+                    </div>
+                </div>
+
+                <!-- Decorative Placeholder (Arabic Calligraphy) -->
+                <div class="lg:w-1/2 mt-10 lg:mt-0 flex justify-center">
+                    <div class="text-white amiri-font text-8xl font-bold opacity-75">
+                         إقـرأ
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Sections -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+
+            <!-- 2. About Us Section -->
+            <section id="about" class="scroll-mt-24">
+                <h2 class="text-4xl font-bold mb-8 text-center arabic-header mx-auto">About The Modirosah</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <!-- History & Mission -->
+                    <div class="space-y-6 p-6 rounded-xl shadow-lg bg-white border border-gray-100">
+                        <h3 class="text-2xl font-semibold text-primary-700">History & Vision</h3>
+                        <p class="text-gray-600">
+                            Founded in the vibrant community of Yemetu Aladorin, Ibadan, NUJUMU SALAM AROBIYAH TUL ISLAMIYAH was established with a clear mission: to provide authentic and holistic Islamic education. We are committed to blending the study of classical Arabic texts with modern, effective teaching methods, ensuring our students receive a comprehensive foundation.
+                        </p>
+                        <p class="text-gray-600 font-medium">
+                            Our vision is to cultivate students who are proficient in the Noble Qur'an, fluent in the Arabic language, and grounded in the exemplary Islamic character (Akhlaq), preparing them to be morally upright leaders in their communities and beyond.
+                        </p>
+                    </div>
+                    <!-- Admin & Location -->
+                    <div class="space-y-6 p-6 rounded-xl shadow-lg bg-white border border-gray-100">
+                        <h3 class="text-2xl font-semibold text-primary-700">Administration & Location</h3>
+                        <p class="text-gray-700">
+                            The Modirosah is proudly under the dedicated administration of
+                            <strong class="text-primary-800">Alfa Nujumdeen</strong>, a committed scholar with years of experience in Islamic pedagogy.
+                        </p>
+                        <div class="flex items-start space-x-3">
+                            <svg class="w-6 h-6 text-accent-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <p class="text-gray-700">
+                                <strong>Location:</strong> Yemetu Aladorin, Ibadan, Nigeria.
+                            </p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <svg class="w-6 h-6 text-accent-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <p class="text-gray-700">
+                                <strong>Official WhatsApp (for enquiries):</strong> <a href="https://wa.me/2348058052314" target="_blank" class="text-primary-600 hover:underline">08058052314</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Programs / Courses Section -->
+            <section id="programs" class="scroll-mt-24">
+                <h2 class="text-4xl font-bold mb-8 text-center arabic-header mx-auto">Our Programs & Courses</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Program Card 1: Qur'an & Tajweed -->
+                    <div class="bg-primary-50 border border-primary-100 p-6 rounded-2xl shadow-islamic hover:shadow-xl transition duration-300">
+                        <div class="text-3xl text-primary-700 mb-4 amiri-font font-bold">القرآن الكريم</div>
+                        <h3 class="text-xl font-bold text-primary-800 mb-3">Al-Qur’an Kareem & Tajweed</h3>
+                        <p class="text-gray-600">
+                            Comprehensive sessions focusing on correct recitation (Tajweed) and various levels of memorization (Hifz) of the Noble Qur'an. Suitable for all ages.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-500 mt-3">
+                            <li>Qur’an memorization (Hifz)</li>
+                            <li>Applied Tajweed rules</li>
+                        </ul>
+                    </div>
+
+                    <!-- Program Card 2: Arabic Language -->
+                    <div class="bg-primary-50 border border-primary-100 p-6 rounded-2xl shadow-islamic hover:shadow-xl transition duration-300">
+                        <div class="text-3xl text-primary-700 mb-4 amiri-font font-bold">اللغة العربية</div>
+                        <h3 class="text-xl font-bold text-primary-800 mb-3">Arabic Language (Lughatul Arabiyah)</h3>
+                        <p class="text-gray-600">
+                            From absolute beginner level to advanced mastery. Students learn to read, write, speak, and understand classical and modern Arabic.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-500 mt-3">
+                            <li>Arabic Grammar (Nahw & Sarf)</li>
+                            <li>Classical Arabic texts (Ajrumiyyah, Balagha)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Program Card 3: Islamic Studies -->
+                    <div class="bg-primary-50 border border-primary-100 p-6 rounded-2xl shadow-islamic hover:shadow-xl transition duration-300">
+                        <div class="text-3xl text-primary-700 mb-4 amiri-font font-bold">تربية إسلامية</div>
+                        <h3 class="text-xl font-bold text-primary-800 mb-3">Islamic Studies (Tarbiyyah Islamiyyah)</h3>
+                        <p class="text-gray-600">
+                            Essential Fiqh (jurisprudence), Aqidah (creed), Seerah (prophetic biography), and the cultivation of proper Islamic morals and etiquette.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-500 mt-3">
+                            <li>Fiqh & Aqidah</li>
+                            <li>Islamic morals and etiquette</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Modalities -->
+                <div class="mt-12 text-center bg-accent-400/10 p-6 rounded-xl shadow-inner">
+                    <h3 class="text-2xl font-bold text-primary-800 mb-4">Class Modalities</h3>
+                    <p class="text-lg text-gray-700 font-medium">
+                        We offer flexible learning options to suit every schedule:
+                        <span class="block mt-2 font-semibold">Weekend Classes | Weekday Classes | Online Learning | Physical Attendance</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- 4. Message From the Admin -->
+            <section id="admin" class="scroll-mt-24">
+                <div class="bg-primary-800 text-white p-8 md:p-12 rounded-3xl shadow-2xl text-center">
+                    <div class="amiri-font text-6xl text-accent-400 mb-6">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+                    <blockquote class="text-xl md:text-2xl italic font-light max-w-4xl mx-auto">
+                        &ldquo;Nujumu Salam Arobiyah Tul Islamiyah is dedicated to building students in Qur’an, Arabic, and Islamic character.
+                        May Allah bless your journey in seeking beneficial knowledge.&rdquo;
+                    </blockquote>
+                    <p class="mt-6 text-xl font-semibold border-t border-accent-400/50 pt-4 max-w-sm mx-auto">
+                        — Alfa Nujumdeen (Admin / Founder)
+                    </p>
+                </div>
+            </section>
+
+            <!-- 5. Registration Page -->
+            <section id="registration" class="scroll-mt-24">
+                <h2 class="text-4xl font-bold mb-10 text-center arabic-header mx-auto">Student Registration / Enrollment</h2>
+                <div class="max-w-3xl mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-2xl border-t-4 border-primary-600">
+                    <p class="mb-6 text-gray-600 text-lg text-center">
+                        Fill out the form below to begin your journey with us. All submissions are automatically sent to the Admin via WhatsApp.
+                    </p>
+
+                    <form id="registration-form" class="space-y-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-primary-800">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-primary-800">Phone Number (Required for contact)</label>
+                            <input type="tel" id="phone" name="phone" required pattern="[0-9]+" title="Enter only digits" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+
+                        <!-- Parent/Guardian Name -->
+                        <div>
+                            <label for="guardianName" class="block text-sm font-medium text-primary-800">Parent/Guardian Name</label>
+                            <input type="text" id="guardianName" name="guardianName" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+
+                        <!-- Age / Class Level -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="age" class="block text-sm font-medium text-primary-800">Age</label>
+                                <input type="number" id="age" name="age" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label for="classLevel" class="block text-sm font-medium text-primary-800">Class Level</label>
+                                <select id="classLevel" name="classLevel" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500 bg-white">
+                                    <option value="">Select Level</option>
+                                    <option value="Child/Beginner">Child/Beginner</option>
+                                    <option value="Youth/Intermediate">Youth/Intermediate</option>
+                                    <option value="Adult/Advanced">Adult/Advanced</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Program to enroll in -->
+                        <div>
+                            <label for="program" class="block text-sm font-medium text-primary-800">Program to Enroll In</label>
+                            <select id="program" name="program" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500 bg-white">
+                                <option value="">Select Program</option>
+                                <option value="Qur’an & Tajweed">Al-Qur’an Kareem & Tajweed</option>
+                                <option value="Arabic Language">Arabic Language (Lughatul Arabiyah)</option>
+                                <option value="Islamic Studies">Islamic Studies (Tarbiyyah Islamiyyah)</option>
+                                <option value="Classical Texts">Classical Arabic Texts (Ajrumiyyah, Nahw, Sarf)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-primary-800">Full Address</label>
+                            <input type="text" id="address" name="address" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+
+                        <!-- Additional Message -->
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-primary-800">Additional Message (Optional)</label>
+                            <textarea id="message" name="message" rows="3" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <button type="submit" id="submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-300 disabled:opacity-50" disabled>
+                                Submit Registration via WhatsApp
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 6. Contact Page -->
+            <section id="contact" class="scroll-mt-24">
+                <h2 class="text-4xl font-bold mb-10 text-center arabic-header mx-auto">Contact & Location</h2>
+                <div class="grid lg:grid-cols-2 gap-10">
+                    <!-- Contact Information & Form -->
+                    <div class="space-y-6">
+                        <!-- Contact Info -->
+                        <div class="bg-primary-50 p-6 rounded-xl shadow-md border border-primary-100">
+                            <h3 class="text-2xl font-semibold text-primary-700 mb-4">Get In Touch</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <p class="text-gray-600">Yemetu Aladorin, Ibadan, Nigeria.</p>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                    <p class="text-gray-600">Admin WhatsApp (Enquiries): <a href="https://wa.me/2348058052314" target="_blank" class="text-primary-600 hover:underline font-medium">08058052314</a></p>
+                                </div>
+                                
+                                <!-- New WhatsApp Button for Group Join Request (Jat Maomo Tech) -->
+                                <div class="pt-4">
+                                    <a href="https://wa.me/2349153683048?text=Hello%20Muhammed%20add%20me%20to%20the%20nujum%20group%20this%20WhatsApp%2009154683048" target="_blank" class="flex items-center justify-center space-x-2 py-2 px-4 bg-[#25D366] text-white font-semibold rounded-lg shadow-md hover:bg-[#1DA851] transition duration-300">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.01 2.001C6.54 2.001 2 6.47 2 12.01c0 2.21 0.73 4.43 2.19 6.27l-1.5 4.67 4.8-1.47c1.76 1.05 3.73 1.58 5.48 1.58 5.47 0 9.94-4.47 9.94-9.94s-4.47-9.94-9.94-9.94zm5.55 13.91l-1.46-0.73c-0.23-0.11-0.5-0.12-0.73 0.04-0.15 0.1-0.26 0.24-0.34 0.4l-0.58 1.16c-0.27 0.54-0.89 0.7-1.35 0.38l-2.02-1.22c-2.47-1.49-4.04-3.79-4.75-6.09l0.55-1.1c0.11-0.22 0.16-0.47 0.14-0.72l-0.09-0.58c-0.11-0.66-0.45-1.25-1.0-1.6l-1.57-0.75c-0.47-0.22-1.04-0.26-1.51-0.09-0.41 0.14-0.72 0.47-0.87 0.9l-0.81 2.06c-0.17 0.42-0.2 0.88-0.06 1.3l1.1 2.21c0.16 0.32 0.36 0.63 0.58 0.92l4.7 4.7c0.29 0.23 0.6 0.43 0.92 0.58l2.21 1.1c0.42 0.14 0.88 0.12 1.3-0.06l2.06-0.81c0.43-0.15 0.76-0.46 0.9-0.87 0.17-0.47 0.13-1.04-0.09-1.51z"/></svg>
+                                        <span>Request to Join Group (Dev Contact)</span>
+                                    </a>
+                                </div>
+                                <!-- End of New WhatsApp Button -->
+
+                            </div>
+                        </div>
+
+                        <!-- Simple Contact Form -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                            <h3 class="text-2xl font-semibold text-primary-700 mb-4">Quick Enquiry Form</h3>
+                            <form action="#" method="POST" class="space-y-4">
+                                <div>
+                                    <input type="text" placeholder="Your Name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500">
+                                </div>
+                                <div>
+                                    <!-- Email field is kept for general contact form best practice, but placeholder is generic -->
+                                    <input type="email" placeholder="Your Email (Optional)" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500">
+                                </div>
+                                <div>
+                                    <textarea rows="4" placeholder="Your Message" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-2 px-4 bg-accent-400 text-primary-800 font-medium rounded-lg hover:bg-accent-500 transition duration-300">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Google Map Embed -->
+                    <div class="rounded-xl overflow-hidden shadow-2xl h-96 lg:h-auto">
+                        <!-- Generic Google Map iframe pointing to a location in Ibadan (Yemetu Aladorin) -->
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15822.427771746244!2d3.896752763328574!3d7.406822266858273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10398f6d2e8e2029%3A0xf63914a8726e6d1c!2sYemetu%2C%20Ibadan%20400102%2C%20Ibadan%20City!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Location of Nujumu Salam Modirosah in Yemetu Aladorin, Ibadan">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary-800 text-white mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+            <p class="text-xl amiri-font text-accent-400 mb-2">NUJUMU SALAM AROBIYAH TUL ISLAMIYAH</p>
+            <p class="text-sm">&copy; <span id="current-year"></span>. All rights reserved. Located in Yemetu Aladorin, Ibadan.</p>
+            <p class="text-xs text-primary-500 mt-4">Website Developed by Jat Maomo Tech. Developer Contact: 09153683048 (Not for student enquiries)</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const registrationForm = document.getElementById('registration-form');
+        const submitButton = document.getElementById('submit-btn');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Function to show toast message
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 5000);
+        }
+
+        // Toggle mobile menu visibility
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Hide mobile menu after clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Enable/Disable submit button based on required fields
+        const checkFormValidity = () => {
+            if (registrationForm.checkValidity()) {
+                submitButton.removeAttribute('disabled');
+            } else {
+                submitButton.setAttribute('disabled', 'true');
+            }
+        };
+
+        // Event listener for input changes to check validity
+        registrationForm.addEventListener('input', checkFormValidity);
+
+        // WhatsApp Submission Logic
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(registrationForm);
+            const data = {
+                fullName: formData.get('fullName'),
+                phone: formData.get('phone'),
+                guardianName: formData.get('guardianName'),
+                age: formData.get('age'),
+                classLevel: formData.get('classLevel'),
+                program: formData.get('program'),
+                address: formData.get('address'),
+                message: formData.get('message'),
+            };
+
+            // Format the WhatsApp message content
+            const message = `
+*--- New Student Registration ---*
+*School:* NUJUMU SALAM AROBIYAH
+
+*Student Name:* ${data.fullName}
+*Age / Level:* ${data.age} / ${data.classLevel}
+*Program:* ${data.program}
+
+*Contact Number:* ${data.phone}
+*Parent/Guardian:* ${data.guardianName || 'Not provided'}
+*Address:* ${data.address}
+
+*Additional Message:* ${data.message || 'N/A'}
+
+_Please contact this prospective student on their provided phone number._
+            `.trim();
+
+            // WhatsApp API details (Admin WhatsApp: 08058052314 -> +2348058052314)
+            const adminWhatsAppNumber = '2348058052314';
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
+            
+            // 1. Display success confirmation
+            showToast('Registration successful! Redirecting to WhatsApp to send details.');
+
+            // 2. Clear form and trigger WhatsApp link after a short delay
+            setTimeout(() => {
+                registrationForm.reset();
+                submitButton.setAttribute('disabled', 'true'); // Re-disable button after reset
+                window.open(whatsappUrl, '_blank'); // Open WhatsApp in a new tab
+            }, 1000);
+        });
+
+        // Initial check on load
+        checkFormValidity();
+    </script>
+</body>
+</html>
